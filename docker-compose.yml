@@ -1,9 +1,44 @@
 version: "3"
 services:
-  server:
+  nginx:
+    image: nginx:latest
+    ports:
+      - "80:80"
+    volumes:
+      - ./load-balancer/nginx.conf:/etc/nginx/nginx.conf
+    networks:
+      - api_gateway_network
+    depends_on:
+      - verifier
+      - reporter
+
+  verifier:
     build:
+      context: ./verifier
       dockerfile: Dockerfile
-  command:
-    sh -c 'npm run dev'
-  ports:
-    - "3000:3000"
+    command:
+      sh -c 'npm run dev'
+    ports:
+      - 3001:3000
+    networks:
+      - api_gateway_network
+    volumes:
+      - ./verifier:/app
+      - /var/www/verifier/node_modules
+
+  reporter:
+    build:
+      context: ./reporter
+      dockerfile: Dockerfile
+    command:
+      sh -c 'npm run dev'
+    ports:
+      - 3002:3000
+    networks:
+      - api_gateway_network
+    volumes:
+      - ./reporter:/app
+      - /var/www/reporter/node_modules
+
+networks:
+  api_gateway_network:
