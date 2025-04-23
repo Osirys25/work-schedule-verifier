@@ -9,13 +9,9 @@ router.get('/', async (req: Express.Request, res: Express.Response) => {
         offset: string;
     };
 
-    console.log(limit, offset);
-
     const httpClient = new HttpClient(process.env.DATABASE_ACCESS_PATH);
 
     const history = await httpClient.getVerificationDetails(limit, offset);
-
-    console.log(history);
 
     res.status(200).send(history);
     return null;
