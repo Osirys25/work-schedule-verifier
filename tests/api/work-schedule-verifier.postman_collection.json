@@ -1,0 +1,45 @@
+{
+	"info": {
+		"_postman_id": "427d8c1d-4445-43c1-86bf-8da03fd8a59d",
+		"name": "work-schedule-verifier",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "44347656",
+		"_collection_link": "https://m-2882362.postman.co/workspace/M's-Workspace~a8cc01df-3d44-4004-8c5c-df744840f4c5/collection/44347656-427d8c1d-4445-43c1-86bf-8da03fd8a59d?action=share&source=collection_link&creator=44347656"
+	},
+	"item": [
+		{
+			"name": "checking schedule",
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n  \"employeeShifts\": [\n    {\n      \"employee_id\": \"123\",\n      \"start_time\": \"2025-04-23T08:00:00Z\",\n      \"end_time\": \"2025-04-23T16:00:00Z\"\n    },\n    {\n      \"employee_id\": \"123\",\n      \"start_time\": \"2025-04-24T06:00:00Z\",\n      \"end_time\": \"2025-04-24T14:00:00Z\"\n    },\n    {\n      \"employee_id\": \"124\",\n      \"start_time\": \"2025-04-23T10:00:00Z\",\n      \"end_time\": \"2025-04-23T18:00:00Z\"\n    },\n    {\n      \"employee_id\": \"124\",\n      \"start_time\": \"2025-04-24T08:00:00Z\",\n      \"end_time\": \"2025-04-24T16:00:00Z\"\n    },\n    {\n      \"employee_id\": \"125\",\n      \"start_time\": \"2025-04-23T09:00:00Z\",\n      \"end_time\": \"2025-04-23T17:00:00Z\"\n    },\n    {\n      \"employee_id\": \"125\",\n      \"start_time\": \"2025-04-24T20:00:00Z\",\n      \"end_time\": \"2025-04-25T04:00:00Z\"\n    },\n    {\n      \"employee_id\": \"126\",\n      \"start_time\": \"2025-04-23T07:00:00Z\",\n      \"end_time\": \"2025-04-23T15:00:00Z\"\n    },\n    {\n      \"employee_id\": \"126\",\n      \"start_time\": \"2025-04-24T05:00:00Z\",\n      \"end_time\": \"2025-04-24T13:00:00Z\"\n    },\n    {\n      \"employee_id\": \"127\",\n      \"start_time\": \"2025-04-23T22:00:00Z\",\n      \"end_time\": \"2025-04-24T06:00:00Z\"\n    },\n    {\n      \"employee_id\": \"127\",\n      \"start_time\": \"2025-04-24T15:00:00Z\",\n      \"end_time\": \"2025-04-24T23:00:00Z\"\n    },\n    {\n      \"employee_id\": \"128\",\n      \"start_time\": \"2025-04-23T18:00:00Z\",\n      \"end_time\": \"2025-04-24T02:00:00Z\"\n    },\n    {\n      \"employee_id\": \"128\",\n      \"start_time\": \"2025-04-24T10:00:00Z\",\n      \"end_time\": \"2025-04-24T18:00:00Z\"\n    }\n  ],\n  \"employees\": [\n    {\n      \"id\": \"123\",\n      \"first_name\": \"Jan\",\n      \"last_name\": \"Kowalski\",\n      \"flexible_hours\": false\n    },\n    {\n      \"id\": \"124\",\n      \"first_name\": \"Anna\",\n      \"last_name\": \"Nowak\",\n      \"flexible_hours\": true\n    },\n    {\n      \"id\": \"125\",\n      \"first_name\": \"Piotr\",\n      \"last_name\": \"Zieliński\",\n      \"flexible_hours\": false\n    },\n    {\n      \"id\": \"126\",\n      \"first_name\": \"Maria\",\n      \"last_name\": \"Wiśniewska\",\n      \"flexible_hours\": true\n    },\n    {\n      \"id\": \"127\",\n      \"first_name\": \"Tomasz\",\n      \"last_name\": \"Lewandowski\",\n      \"flexible_hours\": false\n    },\n    {\n      \"id\": \"128\",\n      \"first_name\": \"Katarzyna\",\n      \"last_name\": \"Szymańska\",\n      \"flexible_hours\": true\n    }\n  ]\n}\n",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost/api/v1/verifier/check/",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"path": [
+						"api",
+						"v1",
+						"verifier",
+						"check",
+						""
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
