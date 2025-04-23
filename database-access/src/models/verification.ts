@@ -1,6 +1,7 @@
 import {DataTypes} from 'sequelize';
 
 import sequelize from './database_auth';
+import {VerificationErrors} from './verification_errors';
 
 export const Verification = sequelize.define('Verification', {
     uuid: {
@@ -14,4 +15,9 @@ export const Verification = sequelize.define('Verification', {
     schedule_sha: {
         type: DataTypes.TEXT,
     },
+});
+
+Verification.hasMany(VerificationErrors, {
+    foreignKey: 'verification_ref',
+    as: 'verificationErrors',
 });

@@ -1,5 +1,6 @@
 import {Verification} from '../models/verification';
 import {Model} from 'sequelize';
+import {VerificationErrors} from '../models/verification_errors';
 
 type VerificationDetails = {
     is_valid: boolean;
@@ -19,6 +20,12 @@ class VerificationService {
 
     async getAllVerifications(limit: number, offset: number): Promise<any> {
         return await Verification.findAll({
+            include: [
+                {
+                    model: VerificationErrors,
+                    as: 'verificationErrors', // Use the alias defined in the association
+                },
+            ],
             limit,
             offset,
             order: [['createdAt', 'DESC']],

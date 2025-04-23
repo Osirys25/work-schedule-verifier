@@ -7,6 +7,6 @@ server.use('/history/', history);
 
 server.listen(port, () => {
     return console.log(
-        `Reporter - express is listening at http://localhost:${port}`
+        `Database-access - express is listening at http://localhost:${port}`
     );
 });
