@@ -18,6 +18,8 @@ services:
       dockerfile: Dockerfile
     command:
       sh -c 'npm run dev'
+    environment:
+      - DATABASE_ACCESS_PATH=http://database-access:3000
     ports:
       - 3001:3000
     networks:
@@ -25,6 +27,8 @@ services:
     volumes:
       - ./verifier:/app
       - /var/www/verifier/node_modules
+    depends_on:
+      - database-access
 
   reporter:
     build:
@@ -39,6 +43,37 @@ services:
     volumes:
       - ./reporter:/app
       - /var/www/reporter/node_modules
+    depends_on:
+      - database-access
+
+  database-access:
+    build:
+      context: ./database-access
+      dockerfile: Dockerfile
+    command:
+      sh -c 'npm run dev'
+    environment:
+      - DATABASE_CONNECTION_URI=postgres://user:pass@postgres:5432/db
+    ports:
+      - 3003:3000
+    networks:
+      - api_gateway_network
+    volumes:
+      - ./database-access:/app
+      - /var/www/database-access/node_modules
+    depends_on:
+      - postgres
+
+  postgres:
+    image: postgres:15.0
+    ports:
+      - "35432:5432"
+    networks:
+      - api_gateway_network
+    environment:
+      POSTGRES_USER: user
+      POSTGRES_PASSWORD: pass
+      POSTGRES_DB: db
 
 networks:
   api_gateway_network:
