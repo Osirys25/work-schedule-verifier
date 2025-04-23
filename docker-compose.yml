@@ -36,6 +36,8 @@ services:
       dockerfile: Dockerfile
     command:
       sh -c 'npm run dev'
+    environment:
+      - DATABASE_ACCESS_PATH=http://database-access:3000
     ports:
       - 3002:3000
     networks:

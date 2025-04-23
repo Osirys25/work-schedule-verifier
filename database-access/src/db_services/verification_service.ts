@@ -16,6 +16,14 @@ class VerificationService {
             ...data,
         });
     }
+
+    async getAllVerifications(limit: number, offset: number): Promise<any> {
+        return await Verification.findAll({
+            limit,
+            offset,
+            order: [['createdAt', 'DESC']],
+        });
+    }
 }
 
 export const verificationService = new VerificationService();

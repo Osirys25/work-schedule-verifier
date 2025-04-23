@@ -1,11 +1,12 @@
 import express from 'express';
-const app = express();
+import history from './api/history';
+const server = express();
 const port = 3000;
 
-app.get('/', (req, res) => {
-    res.send('Hello Boilerplate!');
-});
+server.use('/history/', history);
 
-app.listen(port, () => {
-    return console.log(`Express is listening at http://localhost:${port}`);
+server.listen(port, () => {
+    return console.log(
+        `Reporter - express is listening at http://localhost:${port}`
+    );
 });
