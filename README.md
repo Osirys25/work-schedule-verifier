@@ -32,6 +32,10 @@ To run the project, use the following command:
     docker-compose up
 ```
 
+## Architecture overview
+Below, you can see an image of the complete system architecture diagram.
+![alt architecture_diagram](architecture.png)
+
 # Useful information:
 ## Employee Shift Validation Endpoint
 ### Endpoint: /check/
