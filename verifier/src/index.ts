@@ -1,11 +1,18 @@
 import express from 'express';
-const app = express();
+import bodyParser from 'body-parser';
+
+import verification from "./api/verification";
+const server = express();
 const port = 3000;
 
-app.get('/', (req, res) => {
-    res.send('Hello Boilerplate 1!');
-});
+// server.get('/', (req, res) => {
+//     res.send('Hello Boilerplate reporter!');
+// });
 
-app.listen(port, () => {
-    return console.log(`Express is listening at http://localhost:${port}`);
+server.use(bodyParser.json());
+
+server.use('/', verification);
+
+server.listen(port, () => {
+    return console.log(`Verifier service is listening at http://localhost:${port}`);
 });
