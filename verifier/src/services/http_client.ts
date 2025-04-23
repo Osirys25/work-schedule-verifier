@@ -1,6 +1,13 @@
+type VerificationError = {
+    employee_name: string;
+    date: string;
+    details: string;
+};
+
 type VerificationDetails = {
     is_valid: boolean;
     schedule_sha: string;
+    errors: VerificationError[];
 };
 
 export class HttpClient {

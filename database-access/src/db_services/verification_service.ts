@@ -7,15 +7,35 @@ type VerificationDetails = {
     schedule_sha: string;
 };
 
+type VerificationError = {
+    employee_name: string;
+    date: string;
+    details: string;
+};
+
 class VerificationService {
     async init(): Promise<Model> {
         return Verification.sync({force: true});
     }
 
-    async addNewVerification(data: VerificationDetails): Promise<void> {
-        await Verification.create({
-            ...data,
-        });
+    async addNewVerification(
+        data: VerificationDetails,
+        errors: VerificationError[]
+    ): Promise<void> {
+        await Verification.create(
+            {
+                ...data,
+                verificationErrors: errors,
+            },
+            {
+                include: [
+                    {
+                        model: VerificationErrors,
+                        as: 'verificationErrors',
+                    },
+                ],
+            }
+        );
     }
 
     async getAllVerifications(limit: number, offset: number): Promise<any> {
