@@ -5,10 +5,19 @@ export class HttpClient {
         this.path = path;
     }
 
-    async getVerificationDetails() {
-        const res = await fetch(`${this.path}/verification/`, {
-            method: 'GET',
-        });
+    async getVerificationDetails(limit: string, offset: string) {
+        const res = await fetch(
+            `${this.path}/verification/?` +
+                new URLSearchParams({
+                    limit,
+                    offset,
+                }),
+            {
+                method: 'GET',
+            }
+        );
+
+        console.log(res);
 
         return res.json();
     }

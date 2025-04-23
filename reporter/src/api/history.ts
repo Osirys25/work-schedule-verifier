@@ -1,13 +1,23 @@
 import * as Express from 'express';
+import {HttpClient} from '../services';
 
 const router = Express.Router();
 
 router.get('/', async (req: Express.Request, res: Express.Response) => {
-    const {limit, offset} = req.query;
+    const {limit, offset} = req.query as unknown as {
+        limit: string;
+        offset: string;
+    };
 
     console.log(limit, offset);
 
-    res.status(200).send();
+    const httpClient = new HttpClient(process.env.DATABASE_ACCESS_PATH);
+
+    const history = await httpClient.getVerificationDetails(limit, offset);
+
+    console.log(history);
+
+    res.status(200).send(history);
     return null;
 });
 
