@@ -45,7 +45,7 @@ type Violation = {
  * @property {boolean} is_schedule_valid - Indicates if the schedule is valid.
  * @property {Violation[]} violations - List of violations found in the schedule.
  */
-type ScheduleOutput = {
+export type ScheduleOutput = {
     is_schedule_valid: boolean;
     violations: Violation[];
 };

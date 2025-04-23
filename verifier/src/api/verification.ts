@@ -1,5 +1,7 @@
 import * as Express from 'express';
-import {EmployeeShifts} from '../controllers';
+import {EmployeeShifts, ScheduleOutput} from '../controllers';
+import {HttpClient} from '../services';
+import {CryptoVerificationDetails} from '../services/crypto';
 
 const router = Express.Router();
 
@@ -81,7 +83,7 @@ const router = Express.Router();
  *                 error:
  *                   type: string
  */
-router.post('/check/', (req: Express.Request, res: Express.Response) => {
+router.post('/check/', async (req: Express.Request, res: Express.Response) => {
     if (!req.body) {
         res.status(400).send({error: 'Bad Request: Missing request body'});
         return null;
@@ -98,7 +100,22 @@ router.post('/check/', (req: Express.Request, res: Express.Response) => {
 
     const employeeShiftVerifier = new EmployeeShifts(employeeShifts, employees);
 
-    const errors = employeeShiftVerifier.validate();
+    const errors: ScheduleOutput = employeeShiftVerifier.validate();
+
+    const httpClient = new HttpClient(process.env.DATABASE_ACCESS_PATH);
+
+    const scheduleSha: string = CryptoVerificationDetails.processSchedule(
+        JSON.stringify(req.body)
+    );
+
+    try {
+        await httpClient.sendVerificationDetails({
+            is_valid: errors.is_schedule_valid,
+            schedule_sha: scheduleSha,
+        });
+    } catch (error) {
+        console.log(error);
+    }
 
     res.status(200).send(errors);
     return null;

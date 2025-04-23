@@ -1,13 +1,17 @@
 import express from 'express';
-import sequelize from './models/database_auth';
-const app = express();
+import bodyParser from 'body-parser';
+
+import {verificationService} from './db_services';
+import verification from './api/verification';
+
+const server = express();
 const port = 3000;
 
-app.get('/', (req, res) => {
-    res.send('Hello Boilerplate!');
-});
+server.use(bodyParser.json());
 
-app.listen(port, () => {
-    sequelize.authenticate().then(r => console.log(r));
+server.use('/verification/', verification);
+
+server.listen(port, async () => {
+    await verificationService.init();
     return console.log(`Express is listening at http://localhost:${port}`);
 });
