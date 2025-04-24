@@ -47,11 +47,14 @@ To run the project for production, you can use `docker-compose-prod.yml`. Please
    http://localhost
    ```
 ---
-### Testing the project
+## Testing the project
+### Integration tests with Postman
 To verify and test the project you can use prepared **Postman** collection.\
 It has been placed in `/tests/api` directory.\
 File named: `work-schedule-verifier.postman_collection.json`.\
 You can import it directly to **Postman**.
+
+### Unit tests
 
 ## Architecture overview
 Below, you can see an image of the complete system architecture diagram.
