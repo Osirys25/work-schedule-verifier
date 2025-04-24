@@ -13,7 +13,7 @@ server.use(bodyParser.json());
 server.use('/verification/', verification);
 
 server.listen(port, async () => {
-    await verificationErrorService.init();
     await verificationService.init();
+    await verificationErrorService.init();
     return console.log(`Express is listening at http://localhost:${port}`);
 });
