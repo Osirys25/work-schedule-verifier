@@ -25,13 +25,13 @@ class VerificationService {
         await Verification.create(
             {
                 ...data,
-                verificationErrors: errors,
+                violations: errors,
             },
             {
                 include: [
                     {
                         model: VerificationErrors,
-                        as: 'verificationErrors',
+                        as: 'violations',
                     },
                 ],
             }
@@ -43,7 +43,8 @@ class VerificationService {
             include: [
                 {
                     model: VerificationErrors,
-                    as: 'verificationErrors', // Use the alias defined in the association
+                    as: 'violations',
+                    attributes: ['employee_name', 'date', 'details'],
                 },
             ],
             limit,

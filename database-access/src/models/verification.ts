@@ -19,5 +19,5 @@ export const Verification = sequelize.define('Verification', {
 
 Verification.hasMany(VerificationErrors, {
     foreignKey: 'verification_ref',
-    as: 'verificationErrors',
+    as: 'violations',
 });
