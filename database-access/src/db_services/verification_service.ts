@@ -44,12 +44,13 @@ class VerificationService {
                 {
                     model: VerificationErrors,
                     as: 'violations',
-                    attributes: ['employee_name', 'date', 'details'],
+                    attributes: ['employee_name', 'date', 'break_period'],
                 },
             ],
             limit,
             offset,
             order: [['createdAt', 'DESC']],
+            attributes: ['uuid', 'is_valid', 'createdAt', 'schedule_sha'],
         });
     }
 }

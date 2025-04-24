@@ -161,10 +161,8 @@ Example response:
   ]
 }
 ```
-
-## API Documentation
-
-
+----
+## Verifications history endpoint
 ### Endpoint: `/reporter/history/`
 This endpoint retrieves verification details with pagination.
 

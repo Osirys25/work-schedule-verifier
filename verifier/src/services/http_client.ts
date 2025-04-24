@@ -1,7 +1,7 @@
 type VerificationError = {
     employee_name: string;
     date: string;
-    details: string;
+    break_period: string;
 };
 
 type VerificationDetails = {
