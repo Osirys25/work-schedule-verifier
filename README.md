@@ -165,13 +165,14 @@ Example response:
 ## API Documentation
 
 
-### Endpoint: /reporter/history/
+### Endpoint: `/reporter/history/`
 This endpoint retrieves verification details with pagination.
 
 #### Request
-- **Method**: GET
+- **Method**: `GET`
 - **URL**: `/api/v1/reporter/history/`
-- **Content-Type**: application/json
+- **Content-Type**: `application/json`
+- **Authentication**: Basic Authentication required
 
 #### Parameters
 
@@ -179,10 +180,22 @@ This endpoint retrieves verification details with pagination.
 - **offset** (query parameter, required): The number of records to skip.
 
 #### Example request
-```
+```http
 GET /api/v1/reporter/history/?limit=10&offset=0 HTTP/1.1
 Host: localhost
+Authorization: Basic YWRtaW46YWRtaW4=
 ```
+
+#### Authentication Details
+To access this endpoint, you need to provide Basic Authentication credentials. The Authorization header should be included in the request, formatted as follows:
+```
+Authorization: Basic <base64_encoded_credentials>
+```
+Where <base64_encoded_credentials> is the base64 encoding of username:password. For example, for the username `admin` and password `admin`, the header would be:
+```
+Authorization: Basic YWRtaW46YWRtaW4=
+```
+
 
 #### Responses
 
