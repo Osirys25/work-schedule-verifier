@@ -31,20 +31,36 @@ To run the project, use the following command:
 ```bash 
     docker-compose up
 ```
-
+---
 ## Architecture overview
 Below, you can see an image of the complete system architecture diagram.
 ![alt architecture_diagram](architecture.png)
 
-# Useful information:
+- **API Gateway**
+    - Utilizes **NGINX** and serves as both an API gateway and a load balancer.
+
+- **Verifier**
+    - A service written in **Node.js** that verifies submitted work schedules, send required data to the `database-access` service.
+
+- **Reporter**
+    - A service written in **Node.js** that retrieves data from the `database-access` service, processes the data, and sends it to the user.
+
+- **Database-Access**
+    - A service written in **Node.js** that handles database access and processes incoming data queries.
+
+- **DB (Database)**
+    - A relational database using **PostgreSQL**.
+
+----
+# API Documentation
 ## Employee Shift Validation Endpoint
-### Endpoint: /check/
+### Endpoint: /verifier/check/
 This endpoint validates the provided employee shifts and returns any errors found.
 
 ## Request
 
 **Method:** `POST`  
-**URL:** `/check/`  
+**URL:** `/api/v1/verifier/check/`  
 **Content-Type:** `application/json`
 
 ### Request Body
@@ -129,3 +145,66 @@ Example response:
     }
   ]
 }
+```
+
+## API Documentation
+
+
+### Endpoint: /reporter/history/
+This endpoint retrieves verification details with pagination.
+
+#### Request
+- **Method**: GET
+- **URL**: `/api/v1/reporter/history/`
+- **Content-Type**: application/json
+
+#### Parameters
+
+- **limit** (query parameter, required): The number of records to return.
+- **offset** (query parameter, required): The number of records to skip.
+
+#### Example request
+```
+GET /api/v1/reporter/history/?limit=10&offset=0 HTTP/1.1
+Host: localhost
+```
+
+#### Responses
+
+- **200 OK**
+
+  A list of verification details.
+
+  ```json
+  [
+    {
+      "uuid": "70d26182-d053-4318-869d-0e18748e3963",
+      "is_valid": false,
+      "schedule_sha": "wTNYVs+QYZw5bK/V43zKSOVVjhUs0ReyXBY/IAMyTgY=",
+      "createdAt": "2025-04-24T06:12:47.170Z",
+      "updatedAt": "2025-04-24T06:12:47.170Z",
+      "violations": [
+        {
+          "employee_name": "Tomasz Lewandowski",
+          "date": "2025-04-24",
+          "details": "The break between shifts was only 9.00 hours."
+        },
+        {
+          "employee_name": "Katarzyna Szymańska",
+          "date": "2025-04-24",
+          "details": "The break between shifts was only 8.00 hours."
+        }
+      ]
+    }
+  ]
+  ```
+
+- **400 Bad request**
+
+  Missing or empty required parameters.
+
+  ```json 
+   {
+      "error": "Bad Request: Missing or empty required parameters"
+   }
+  ```

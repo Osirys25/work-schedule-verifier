@@ -9,11 +9,12 @@ router.post('/', async (req: Express.Request, res: Express.Response) => {
         return null;
     }
 
-    const {is_valid, schedule_sha} = req.body;
+    const {is_valid, schedule_sha, errors} = req.body;
 
     if (
         typeof is_valid === 'undefined' ||
-        typeof schedule_sha === 'undefined'
+        typeof schedule_sha === 'undefined' ||
+        typeof errors === 'undefined'
     ) {
         res.status(400).send({
             error: 'Bad Request: Missing or empty required parameters',
@@ -21,7 +22,10 @@ router.post('/', async (req: Express.Request, res: Express.Response) => {
         return null;
     }
 
-    await verificationService.addNewVerification({is_valid, schedule_sha});
+    await verificationService.addNewVerification(
+        {is_valid, schedule_sha},
+        errors
+    );
 
     res.status(200).send();
     return null;

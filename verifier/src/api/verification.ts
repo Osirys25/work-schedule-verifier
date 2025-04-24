@@ -112,6 +112,7 @@ router.post('/check/', async (req: Express.Request, res: Express.Response) => {
         await httpClient.sendVerificationDetails({
             is_valid: errors.is_schedule_valid,
             schedule_sha: scheduleSha,
+            errors: errors.violations,
         });
     } catch (error) {
         console.log(error);
