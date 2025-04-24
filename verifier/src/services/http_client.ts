@@ -4,7 +4,7 @@ type VerificationError = {
     break_period: string;
 };
 
-type VerificationDetails = {
+export type VerificationDetails = {
     is_valid: boolean;
     schedule_sha: string;
     errors: VerificationError[];
