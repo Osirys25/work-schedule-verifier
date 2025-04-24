@@ -40,7 +40,7 @@ Below, you can see an image of the complete system architecture diagram.
     - Utilizes **NGINX** and serves as both an API gateway and a load balancer.
 
 - **Verifier**
-    - A service written in **Node.js** that verifies submitted work schedules.
+    - A service written in **Node.js** that verifies submitted work schedules, send required data to the `database-access` service.
 
 - **Reporter**
     - A service written in **Node.js** that retrieves data from the `database-access` service, processes the data, and sends it to the user.
