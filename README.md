@@ -27,10 +27,25 @@ To get started with the project, follow these steps:
    ```
 
 ## Running the Project
-To run the project, use the following command:
-```bash 
-    docker-compose up
+To run the project for development, use the following commands:
+1. Install required dependencies:
+    ```bash
+   (cd verifier && npm install) && (cd reporter && npm install) && (cd database-access && npm install) && exit
+    ```
+2. Run docker compose:
+    ```bash 
+    docker compose up
+   ```
+---
+To run the project for production, you can use `docker-compose-prod.yml`. Please, use following command:
+```bash
+    docker compose -f docker-compose-prod.yml up
 ```
+---
+   You could use running system via `localhost` network with address:
+   ```
+   http://localhost
+   ```
 ---
 ## Architecture overview
 Below, you can see an image of the complete system architecture diagram.
