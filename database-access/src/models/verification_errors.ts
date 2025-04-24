@@ -14,7 +14,7 @@ export const VerificationErrors = sequelize.define('VerificationErrors', {
     date: {
         type: DataTypes.TEXT,
     },
-    details: {
+    break_period: {
         type: DataTypes.TEXT,
     },
 });

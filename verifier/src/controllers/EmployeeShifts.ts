@@ -1,3 +1,5 @@
+import {EmployeeUtils, ShiftUtils} from '../utils';
+
 /**
  * Represents a work shift.
  * @typedef {Object} Shift
@@ -5,7 +7,7 @@
  * @property {string} start_time - The start time of the shift (ISO 8601 format).
  * @property {string} end_time - The end time of the shift (ISO 8601 format).
  */
-type Shift = {
+export type Shift = {
     employee_id: string;
     start_time: string;
     end_time: string;
@@ -19,7 +21,7 @@ type Shift = {
  * @property {string} last_name - The last name of the employee.
  * @property {boolean} flexible_hours - Indicates if the employee has flexible working hours.
  */
-type Employee = {
+export type Employee = {
     id: string;
     first_name: string;
     last_name: string;
@@ -36,7 +38,7 @@ type Employee = {
 type Violation = {
     employee_name: string;
     date: string;
-    details: string;
+    break_period: string;
 };
 
 /**
@@ -54,26 +56,77 @@ export class EmployeeShifts {
     private shifts: Shift[];
     private employees: Employee[];
 
-    /**
-     * Creates an instance of EmployeeShifts.
-     * @param {Shift[]} shifts - The list of shifts.
-     * @param {Employee[]} employees - The list of employees.
-     */
     constructor(shifts: Shift[], employees: Employee[]) {
         this.shifts = shifts;
         this.employees = employees;
     }
 
+    private parseViolationResponse(
+        employeeId: string,
+        date: string,
+        breakPeriod: string
+    ): Violation {
+        return {
+            employee_name: EmployeeUtils.getEmployeeName(
+                employeeId,
+                this.employees
+            ),
+            date,
+            break_period: breakPeriod,
+        };
+    }
+
     /**
-     * Gets the name of an employee by their ID.
-     * @param {string} employeeId - The ID of the employee.
-     * @returns {string} The name of the employee.
+     * Validates the shifts for a single employee.
+     * @param {Shift[]} shifts - The list of shifts for the employee.
+     * @param {Employee} employee - The employee object.
+     * @returns {Violation[]} The list of violations for the employee.
      */
-    private getEmployeeName(employeeId: string): string {
-        const employee = this.employees.find(emp => emp.id === employeeId);
-        return employee
-            ? `${employee.first_name} ${employee.last_name}`
-            : 'Unknown';
+    private validateEmployeeShifts(
+        shifts: Shift[],
+        employee: Employee
+    ): Violation[] {
+        const violations: Violation[] = [];
+        const sortedShifts = ShiftUtils.sortShiftsByStartTime(shifts);
+
+        for (let i = 1; i < sortedShifts.length; i++) {
+            const restPeriod = ShiftUtils.calculateRestPeriod(
+                sortedShifts[i - 1],
+                sortedShifts[i]
+            );
+
+            if (employee.flexible_hours) {
+                const nextShift =
+                    i + 1 < sortedShifts.length ? sortedShifts[i + 1] : null;
+                const endOfWorkDayRestPeriod =
+                    ShiftUtils.calculateEndOfWorkDayRestPeriod(
+                        sortedShifts[i],
+                        nextShift
+                    );
+
+                if (endOfWorkDayRestPeriod < 11) {
+                    violations.push(
+                        this.parseViolationResponse(
+                            employee.id,
+                            sortedShifts[i].start_time.split('T')[0],
+                            endOfWorkDayRestPeriod.toFixed(2)
+                        )
+                    );
+                }
+            } else {
+                if (restPeriod < 11) {
+                    violations.push(
+                        this.parseViolationResponse(
+                            employee.id,
+                            sortedShifts[i].start_time.split('T')[0],
+                            restPeriod.toFixed(2)
+                        )
+                    );
+                }
+            }
+        }
+
+        return violations;
     }
 
     /**
@@ -82,43 +135,18 @@ export class EmployeeShifts {
      */
     public validate(): ScheduleOutput {
         const violations: Violation[] = [];
-        const employeeShifts: {[key: string]: Shift[]} = {};
+        const employeeShifts = ShiftUtils.groupShiftsByEmployee(this.shifts);
 
-        // Group shifts by employee
-        this.shifts.forEach(shift => {
-            if (!employeeShifts[shift.employee_id]) {
-                employeeShifts[shift.employee_id] = [];
-            }
-            employeeShifts[shift.employee_id].push(shift);
-        });
-
-        // Validate each employee's shifts
         for (const employeeId in employeeShifts) {
             const shifts = employeeShifts[employeeId];
-            shifts.sort(
-                (a, b) =>
-                    new Date(a.start_time).getTime() -
-                    new Date(b.start_time).getTime()
+            const employee = this.employees.find(emp => emp.id === employeeId);
+            if (!employee) continue;
+
+            const employeeViolations = this.validateEmployeeShifts(
+                shifts,
+                employee
             );
-
-            for (let i = 1; i < shifts.length; i++) {
-                const previousShiftEnd = new Date(
-                    shifts[i - 1].end_time
-                ).getTime();
-                const currentShiftStart = new Date(
-                    shifts[i].start_time
-                ).getTime();
-                const restPeriod =
-                    (currentShiftStart - previousShiftEnd) / (1000 * 60 * 60);
-
-                if (restPeriod < 11) {
-                    violations.push({
-                        employee_name: this.getEmployeeName(employeeId),
-                        date: shifts[i].start_time.split('T')[0],
-                        details: `The break between shifts was only ${restPeriod.toFixed(2)} hours.`,
-                    });
-                }
-            }
+            violations.push(...employeeViolations);
         }
 
         return {
