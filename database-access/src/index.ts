@@ -5,7 +5,7 @@ import {verificationService} from './db_services';
 import verification from './api/verification';
 import {verificationErrorService} from './db_services/verification_errors_service';
 
-const server = express();
+export const server = express();
 const port = 3000;
 
 server.use(bodyParser.json());

@@ -56,6 +56,21 @@ You can import it directly to **Postman**.
 
 ### Unit tests
 
+Unit tests in this project have been implemented using **Jest** and **supertest** frameworks. These tests cover the Node.js services: **verifier**, **reporter**, and **database-access**.
+
+#### Running Tests
+
+To run the unit tests, navigate to the folder of the respective service using the `cd` command, and then execute the following command:
+
+```bash
+  npm run test
+```
+Example:
+```bash
+  cd verifier
+  npm run test
+```
+----
 ## Architecture overview
 Below, you can see an image of the complete system architecture diagram.
 ![alt architecture_diagram](architecture.png)
