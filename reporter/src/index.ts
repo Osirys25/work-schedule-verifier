@@ -1,6 +1,6 @@
 import express from 'express';
 import history from './api/history';
-const server = express();
+export const server = express();
 const port = 3000;
 
 server.use('/history/', history);
