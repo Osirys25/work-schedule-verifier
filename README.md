@@ -175,12 +175,12 @@ Example response:
     {
       "employee_name": "Tomasz Lewandowski",
       "date": "2025-04-24",
-      "details": "The break between shifts was only 9.00 hours."
+      "break_period": "8.00"
     },
     {
       "employee_name": "Katarzyna Szymańska",
       "date": "2025-04-24",
-      "details": "The break between shifts was only 8.00 hours."
+      "break_period": "8.00"
     }
   ]
 }
@@ -237,12 +237,12 @@ Authorization: Basic YWRtaW46YWRtaW4=
         {
           "employee_name": "Tomasz Lewandowski",
           "date": "2025-04-24",
-          "details": "The break between shifts was only 9.00 hours."
+          "break_period": "9.00"
         },
         {
           "employee_name": "Katarzyna Szymańska",
           "date": "2025-04-24",
-          "details": "The break between shifts was only 8.00 hours."
+          "break_period": "8.00"
         }
       ]
     }

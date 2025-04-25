@@ -61,9 +61,9 @@ const router = Express.Router();
  *                           type: string
  *                           format: date
  *                           example: "2025-04-24"
- *                         details:
+ *                         break_period:
  *                           type: string
- *                           example: "The break between shifts was only 9.00 hours."
+ *                           example: "9.00"
  *       400:
  *         description: Bad Request: Missing or empty required parameters.
  *         content:
