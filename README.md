@@ -71,6 +71,21 @@ Example:
   npm run test
 ```
 ----
+## Code Quality Scripts
+
+For the services `verifier`, `reporter`, and `database-access`, we have included scripts to ensure code quality using **EsLint** and **Prettier**.
+
+To use these scripts, navigate to the respective service directory using the `cd` command in your console:
+
+- **EsLint**: Run the following command to lint your code:
+  ```sh
+  npm run lint
+  ```
+- **Prettier**: Run the following command to format your code:
+    ```sh
+    npm run prettify
+    ```
+---
 ## Architecture overview
 Below, you can see an image of the complete system architecture diagram.
 ![alt architecture_diagram](architecture.png)
@@ -232,7 +247,6 @@ Authorization: Basic YWRtaW46YWRtaW4=
       "is_valid": false,
       "schedule_sha": "wTNYVs+QYZw5bK/V43zKSOVVjhUs0ReyXBY/IAMyTgY=",
       "createdAt": "2025-04-24T06:12:47.170Z",
-      "updatedAt": "2025-04-24T06:12:47.170Z",
       "violations": [
         {
           "employee_name": "Tomasz Lewandowski",

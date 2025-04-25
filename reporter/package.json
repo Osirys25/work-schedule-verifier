@@ -17,7 +17,9 @@
   "scripts": {
     "test": "jest --collectCoverageFrom='src/**/*.ts'",
     "dev": "nodemon",
-    "serve": "tsc && node dist/index.js"
+    "serve": "tsc && node dist/index.js",
+    "lint": "eslint src --ext .tsx,.ts",
+    "prettify": "prettier --write \"src/**/*.ts\""
   },
   "devDependencies": {
     "@eslint/js": "^9.25.1",
