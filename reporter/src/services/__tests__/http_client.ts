@@ -28,8 +28,7 @@ describe('reporter > src > services > HttpClient', () => {
                             {
                                 employee_name: 'Tomasz Lewandowski',
                                 date: '2025-04-24',
-                                details:
-                                    'The break between shifts was only 9.00 hours.',
+                                break_period: '9.00',
                             },
                         ],
                     },
@@ -61,8 +60,7 @@ describe('reporter > src > services > HttpClient', () => {
                         {
                             employee_name: 'Tomasz Lewandowski',
                             date: '2025-04-24',
-                            details:
-                                'The break between shifts was only 9.00 hours.',
+                            break_period: '9.00',
                         },
                     ],
                 },
