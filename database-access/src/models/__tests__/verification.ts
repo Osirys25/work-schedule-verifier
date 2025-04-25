@@ -1,6 +1,7 @@
 import {DataTypes} from 'sequelize';
 import sequelize from '../database_auth';
 import {VerificationErrors} from '../verification_errors';
+import {Verification} from '../verification';
 
 jest.mock('../database_auth', () => ({
     define: jest.fn().mockReturnValue({
@@ -46,7 +47,6 @@ describe('database-access > src > models > Verification Model', () => {
     });
 
     it('should set up the association with VerificationErrors', () => {
-        const Verification = sequelize.define('', {});
         Verification.hasMany(VerificationErrors, {
             foreignKey: 'verification_ref',
             as: 'violations',
