@@ -10,7 +10,7 @@ type VerificationDetails = {
 type VerificationError = {
     employee_name: string;
     date: string;
-    details: string;
+    break_period: string;
 };
 
 class VerificationService {
