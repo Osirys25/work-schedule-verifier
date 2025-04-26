@@ -7,7 +7,7 @@ class VerificationErrorsService {
      * @returns {Promise<Model>} The synced VerificationErrors model.
      */
     async init(): Promise<Model> {
-        return VerificationErrors.sync({force: true});
+        return VerificationErrors.sync({force: false, alter: true});
     }
 }
 

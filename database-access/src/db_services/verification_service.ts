@@ -30,7 +30,7 @@ class VerificationService {
      * @returns {Promise<Model>} The synced Verification model.
      */
     async init(): Promise<Model> {
-        return Verification.sync({force: true});
+        return Verification.sync({force: false, alter: true});
     }
 
     /**
